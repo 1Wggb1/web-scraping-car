@@ -1,6 +1,5 @@
 import datetime
 from src.result.file_result import FileResult
-from src.result.filter_result import FilterResult
 from src.scraping.scraping import Scraping
 
 
@@ -24,9 +23,8 @@ class ICarrosScraping(Scraping):
     CAR_PROGRESS_BAR_ELEMENT = "progress"
     CAR_PROGRESS_BAR_CSS_CLASS = "pagination__progress-bar"
 
-    def __init__(self, search_filter_params, filter_result: FilterResult, file_result: FileResult):
+    def __init__(self, search_filter_params, file_result: FileResult):
         self.search_filter_params = search_filter_params
-        self.filter_result = filter_result
         self.file_result = file_result
 
     def start_scraping(self):
@@ -53,17 +51,17 @@ class ICarrosScraping(Scraping):
         return self.search(assembly_site_url(page_number))
 
     def get_title(self, scraping_result):
-        return self.filter_result.filter(scraping_result,
+        return self.filter(scraping_result,
                                          ICarrosScraping.CAR_RESULT_TITLE_HTML_ELEMENT,
                                          {"class": ICarrosScraping.CAR_RESULT_TITLE_CSS_CLASS})
 
     def get_cards(self, scraping_result):
-        return self.filter_result.filter(scraping_result,
+        return self.filter(scraping_result,
                                          ICarrosScraping.CAR_CARD_HTML_ELEMENT,
                                          {"id": ICarrosScraping.CAR_CARD_CSS_ID})
 
     def get_max_page(self, scraping_result):
-        filtered_item = self.filter_result.filter(scraping_result,
+        filtered_item = self.filter(scraping_result,
                                                   ICarrosScraping.CAR_PROGRESS_BAR_ELEMENT,
                                                   {"class": ICarrosScraping.CAR_PROGRESS_BAR_CSS_CLASS})
         return int(filtered_item.attrs["max"])

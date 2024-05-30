@@ -1,4 +1,4 @@
 # created by virtualenv automatically
-./site-packages
-./results
+site-packages
+results
 *.cfg

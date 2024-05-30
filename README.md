@@ -1,6 +1,7 @@
 # Web-Scraping-Car
-It´s one python web-scraping using beautifulSoup. The main objective
-is find latest cars ads in the site. Initially there is an implementation
+It´s one basic python web-scraping using 
+[beautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/). 
+The main objective is find latest cars ads in the site. Initially there is an implementation
 to find in the Icarros.
 
 > - The file `src/main.py` contains one example of use;
