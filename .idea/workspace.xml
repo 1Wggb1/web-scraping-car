@@ -90,26 +90,10 @@
       <change afterPath="$PROJECT_DIR$/../projecteuler/src/main/java/Sieves.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Problem399.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Sieves.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate.fish" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate.nu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/activate_this.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/deactivate.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/normalizer.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pip-3.11.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pip.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pip3.11.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pip3.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pydoc.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/python.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/pythonw.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/wheel-3.11.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/wheel.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/wheel3.11.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/wheel3.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +108,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -135,22 +119,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.__init__.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/work/idea-projects/web-scraping-cars&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.__init__.executor": "Debug",
+    "Python.main (1).executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/work/idea-projects/web-scraping-car",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="web-scraping-cars" />
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\work\idea-projects\web-scraping-car" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\work\idea-projects\web-scraping-car\src\scraping" />
+      <recent name="C:\work\idea-projects\web-scraping-car\src\result" />
+      <recent name="C:\work\idea-projects\web-scraping-car\src\br\com\webscrapingcar" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main (1)">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="web-scraping-car" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -162,7 +157,29 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/__init__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="web-scraping-car" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\work\idea-projects\web-scraping-car\src\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,7 +190,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.__init__" />
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
