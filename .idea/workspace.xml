@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="76f3848a-5f9d-4030-a532-b4f8b2ec5e0c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Generics/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/Generics.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/src/main/java/A.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/src/main/java/Comparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/src/main/java/Employee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/src/main/java/Sum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/target/classes/Comparator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Generics/target/classes/Sum.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/fileContent/fileContent.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/6.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/classes/java/main/com/br/springsecurity/sample/boot/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/classes/java/main/com/br/springsecurity/sample/security/MvcConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/classes/java/main/com/br/springsecurity/sample/security/WebSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/libs/SpringSecuritySample-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/resources/main/template/hello.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/resources/main/template/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/resources/main/template/welcome.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/build/tmp/bootJar/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/classes/com/br/springsecurity/sample/boot/App.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/classes/com/br/springsecurity/sample/security/MvcConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/classes/com/br/springsecurity/sample/security/WebSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/resources/templates/hello.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/resources/templates/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/out/production/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/java/com/br/springsecurity/sample/boot/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/java/com/br/springsecurity/sample/security/MvcConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/java/com/br/springsecurity/sample/security/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/resources/templates/hello.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/resources/templates/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecuritySample/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/emulators/function-cloud.dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/src/main/java/br/com/firestore/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/src/main/java/br/com/firestore/FirebaseDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/src/main/java/br/com/firestore/FirestoreConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/src/main/java/br/com/firestore/Function.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestore/src/main/java/br/com/firestore/PubBackgoudFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/saveactions_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/projecteuler.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/src/main/java/Problem399.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/src/main/java/Sieves.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Problem399.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Sieves.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate.fish" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate.nu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/activate_this.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/deactivate.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/normalizer.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pip-3.11.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pip.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pip3.11.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pip3.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pydoc.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/python.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/pythonw.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/wheel-3.11.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/wheel.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/wheel3.11.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/wheel3.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2hBfF5l8uMJC9UqP6cfOWNFYX3S" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.__init__.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/work/idea-projects/web-scraping-cars&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="web-scraping-cars" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.__init__" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="76f3848a-5f9d-4030-a532-b4f8b2ec5e0c" name="Changes" comment="" />
+      <created>1717072327885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717072327885</updated>
+    </task>
+    <servers />
+  </component>
+</project>
