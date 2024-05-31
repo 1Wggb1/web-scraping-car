@@ -90,18 +90,13 @@
       <change afterPath="$PROJECT_DIR$/../projecteuler/src/main/java/Sieves.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Problem399.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Sieves.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/icarros/found_results.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/webmotors/found_results.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/result/file_result_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scraping/webmotors_scraping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/datetime_format_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/icarros/found_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/results/icarros/found_results.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/webmotors/found_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/results/webmotors/found_results.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/result/file_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/result/file_result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/result/file_result_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/result/file_result_repository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scraping/icarros_scraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scraping/icarros_scraping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scraping/scraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scraping/scraping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/logger_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scraping/webmotors_scraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scraping/webmotors_scraping.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

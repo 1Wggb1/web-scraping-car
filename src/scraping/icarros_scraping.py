@@ -27,6 +27,9 @@ class ICarrosScraping(Scraping, FileResult):
         self.file_result = FileResult()
         self.repository = FileResultRepository(ICarrosScraping.REPOSITORY_FILE_NAME, self.file_result)
 
+    def get_latest_cars(self):
+        return self.repository.find_latest()
+
     def start_car_scraping(self):
         log.info("Starting icarros scraping...")
         first_page_search = self.do_car_search(1)

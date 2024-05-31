@@ -23,6 +23,9 @@ class WebmotorsScraping(Scraping, FileResult):
         self.encoded_query_params = encoded_query_params
         self.repository = FileResultRepository(WebmotorsScraping.REPOSITORY_FILE_NAME, self)
 
+    def get_latest_cars(self):
+        return self.repository.find_latest()
+
     def start_car_scraping(self):
         log.info("Starting webmotors scraping...")
         results = self.do_car_search()
