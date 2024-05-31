@@ -1,6 +1,7 @@
 import datetime
 from src.result.file_result import FileResult
 from src.scraping.scraping import Scraping
+from src.util.logger import log
 
 
 def create_file_name():
@@ -27,43 +28,76 @@ class ICarrosScraping(Scraping):
         self.search_filter_params = search_filter_params
         self.file_result = file_result
 
-    def start_scraping(self):
-        results = self.scraping_cars()
+    def start_car_scraping(self):
+        log.info("Starting icarros scraping...")
+        results = self.do_cars_scraping()
         if len(results) == 0:
-            print("No result found ⊙﹏⊙∥")
+            log.warn("No result found on icarros scraping ⊙﹏⊙∥")
             return
 
+        log.info("Writing icarros scraping result...")
         self.write_results(create_file_name(), results)
 
-    def scraping_cars(self):
+    def do_cars_scraping(self):
         results = []
         first_page_search = self.search(assembly_site_url(self.search_filter_params, 1))
 
-        search_title = self.get_title(first_page_search)
-        results.insert(0, search_title)
+        title = self.get_title(first_page_search)
+        results.insert(0, title)
+        car_cards = self.get_car_cards(first_page_search)
 
-        results.append(self.get_cards(first_page_search))
+        results.append(car_cards)
+        ads_data = self.extract_ads_data(car_cards)
+
         max_page = self.get_max_page(first_page_search)
-        results.extend([self.get_cards(self.scraping_car(page)) for page in range(2, max_page + 1)])
+        for page in range(2, max_page + 1):
+            car_cards = self.get_car_cards(self.do_car_scraping(page))
+            ads_data |= self.extract_ads_data(car_cards)
+            results.append(car_cards)
+
+        strftime = datetime.datetime.now().strftime("%d_%m_%Y-%H_%M")
+        self.file_result.write(f"ad_data-{strftime}.json", ads_data.__str__())
+
+        #results.extend([self.get_car_cards(self.do_car_scraping(page)) for page in range(2, max_page + 1)])
         return results
 
-    def scraping_car(self, page_number):
+    def extract_ads_data(self, car_cards):
+        result = {}
+        imgs = car_cards.findAll("img")
+        for img in imgs:
+            val = self.extract_onclick_value(img)
+            key = self.extract_ad_idx_position(val)
+            result[key] = val
+        return result
+
+    def extract_onclick_value(self, element):
+        onclick_val = element.attrs["onclick"]
+        onclick_val = onclick_val[onclick_val.index("(") + 1:]
+        return onclick_val[:len(onclick_val) - 1]
+
+    def extract_ad_idx_position(self, onclick_val):
+        idx_start_position = onclick_val.find("index: ")
+        ad_idx_start_position = idx_start_position + 7
+        ad_idx_final_position = onclick_val[ad_idx_start_position:].find(",")
+        return int(onclick_val[ad_idx_start_position:ad_idx_start_position + ad_idx_final_position])
+
+    def do_car_scraping(self, page_number):
         return self.search(assembly_site_url(page_number))
 
     def get_title(self, scraping_result):
         return self.filter(scraping_result,
-                                         ICarrosScraping.CAR_RESULT_TITLE_HTML_ELEMENT,
-                                         {"class": ICarrosScraping.CAR_RESULT_TITLE_CSS_CLASS})
+                           ICarrosScraping.CAR_RESULT_TITLE_HTML_ELEMENT,
+                           {"class": ICarrosScraping.CAR_RESULT_TITLE_CSS_CLASS})
 
-    def get_cards(self, scraping_result):
+    def get_car_cards(self, scraping_result):
         return self.filter(scraping_result,
-                                         ICarrosScraping.CAR_CARD_HTML_ELEMENT,
-                                         {"id": ICarrosScraping.CAR_CARD_CSS_ID})
+                           ICarrosScraping.CAR_CARD_HTML_ELEMENT,
+                           {"id": ICarrosScraping.CAR_CARD_CSS_ID})
 
     def get_max_page(self, scraping_result):
         filtered_item = self.filter(scraping_result,
-                                                  ICarrosScraping.CAR_PROGRESS_BAR_ELEMENT,
-                                                  {"class": ICarrosScraping.CAR_PROGRESS_BAR_CSS_CLASS})
+                                    ICarrosScraping.CAR_PROGRESS_BAR_ELEMENT,
+                                    {"class": ICarrosScraping.CAR_PROGRESS_BAR_CSS_CLASS})
         return int(filtered_item.attrs["max"])
 
     def write_results(self, file_name, results):
