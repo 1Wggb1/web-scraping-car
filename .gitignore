@@ -1,6 +1,6 @@
 # created by virtualenv automatically
 site-packages
-results/**
-results
+# results/**
+# results
 *.cfg
 .idea
