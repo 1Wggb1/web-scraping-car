@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: run web-scraping-car
-        run: python src\main.py
+        run: python src/main.py
 
       - name: commit web-scraping-car results
         run: |
