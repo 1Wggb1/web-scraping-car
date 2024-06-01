@@ -37,10 +37,7 @@ class WebmotorsScraping(Scraping, FileResult):
             if result.get("Media"):
                 del result["Media"]
             result_id = str(result["UniqueId"])
-            ad_data[result_id] = {
-                "ad_url": WebmotorsScraping.__assembly_ad_url(result, result_id),
-                "car": result
-            }
+            ad_data[result_id] = self.create_result(WebmotorsScraping.__assembly_ad_url(result, result_id), result)
         self.repository.merge(ad_data)
 
     @staticmethod
