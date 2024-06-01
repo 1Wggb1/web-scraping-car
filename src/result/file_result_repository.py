@@ -1,5 +1,5 @@
 import json
-from src.result.file_result import FileResult, create_file_name
+from src.result.file_result import FileResult
 from src.util.logger_util import log
 from src.util.datetime_format_util import get_formatted_datetime
 
@@ -11,11 +11,9 @@ class FileResultRepository:
         self.file_name = file_name
         self.file_result = file_result
 
-    def persist_all(self, results: [], result_folder: str, file_extension: str):
-        file_name = create_file_name(result_folder, file_extension)
-        log.info(f"Persisting... result data on file repository on file = {file_name}")
-        for result in results:
-            self.file_result.write(file_name, result.__str__())
+    def persist_all(self, results: str, result_file: str):
+        log.info(f"Persisting... result data on file repository on file = {result_file}")
+        self.file_result.override_write(result_file, results)
 
     def merge(self, result_data: dict):
         persistent_result: dict = self.__find_result()
@@ -25,10 +23,11 @@ class FileResultRepository:
 
         if len(new_results_keys):
             log.info(f"Merging... result data on file repository on file = {self.file_name}")
-            persistent_result[FileResultRepository.INFO_KEY] = self.generate_update_infos(new_results_keys)
+            persistent_result[FileResultRepository.INFO_KEY] = FileResultRepository.__generate_update_infos(new_results_keys)
             self.file_result.override_write(self.file_name, json.dumps(persistent_result))
 
-    def generate_update_infos(self, results):
+    @staticmethod
+    def __generate_update_infos(results):
         return {
             "lastUpdateDateTime": get_formatted_datetime(),
             "foundResultsIds": list(results),
