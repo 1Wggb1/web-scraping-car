@@ -1,6 +1,14 @@
 name: run main.py
 
 on:
+  push:
+    branches:
+      - "develop"
+  pull_request:
+    branches:
+      - "develop" 
+    paths:
+      - ".github/workflows/actions.yaml"
   schedule:
     - cron:  "30 */2 * * *" #run after 2h30m every day
 
