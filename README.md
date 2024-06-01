@@ -14,5 +14,4 @@ one to find in the site [Icarros](https://www.icarros.com.br/ache/listaanuncios.
 ## Commands to install required dependencies
 
 - This project uses `python 3.11`.
-- `pip install requests` 
-- `pip install beautifulSoup4`
+- `pip install -r requirements.txt`
