@@ -10,7 +10,7 @@ on:
     paths:
       - ".github/workflows/actions.yaml"
   schedule:
-    - cron:  "30 */2 * * *" #run after 2h30m every day
+    - cron:  "30 */8 * * *" #run after 2h30m every day
 
 jobs:
   build:
