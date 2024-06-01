@@ -4,7 +4,7 @@ It´s a basic python web-scraping using [requests](https://requests.readthedocs.
 The main objective is find latest cars ads in sites. There are two implementations
 one to find in the site [Icarros](https://www.icarros.com.br/ache/listaanuncios.jsp) and another to find in [webmotors](https://www.webmotors.com.br/).
 
-> - The file `src/main.py` contains examples of use;
+> - The file `main.py` contains examples of use;
 > - The scraping result is store on folder `results/[site] (icarros/webmotors)` at root of project;
 > - There are a file called `results/[site]/found_results.json` in each site folder. 
 > This file stores results already found 
