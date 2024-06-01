@@ -1,4 +1,4 @@
-name: find ad´s cars - web-scraping-car
+name: run main.py
 
 on:
   schedule:
@@ -8,11 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4.1.5
 
-      - name: setup python
-        uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5.1.0
         with:
           python-version: "3.11"
 
