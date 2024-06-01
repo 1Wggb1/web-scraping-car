@@ -7,7 +7,8 @@ from typing import Final
 
 
 class WebmotorsScraping(Scraping, FileResult):
-    SITE_URL: Final = "https://www.webmotors.com.br/api/search/car?url=https://www.webmotors.com.br/carros"
+    MAIN_URL: Final = "https://www.webmotors.com.br"
+    SITE_URL: Final = f"https://www.webmotors.com.br/api/search/car?url={MAIN_URL}/carros"
     RESULT_FILE_EXTENSION: Final = "json"
     REPOSITORY_FILE_NAME: Final = "/webmotors/found_results.json"
 
@@ -33,10 +34,45 @@ class WebmotorsScraping(Scraping, FileResult):
         search_results = found_results["SearchResults"]
         ad_data = {}
         for result in search_results:
-            del result["Media"]
-            key = str(result["UniqueId"])
-            ad_data[key] = result
+            if result.get("Media"):
+                del result["Media"]
+            result_id = str(result["UniqueId"])
+            ad_data[result_id] = {
+                "ad_url": WebmotorsScraping.__assembly_ad_url(result, result_id),
+                "car": result
+            }
         self.repository.merge(ad_data)
+
+    @staticmethod
+    def __assembly_ad_url(result, result_id):
+        slash_separator = "/"
+        specification = result["Specification"]
+        return (WebmotorsScraping.MAIN_URL + slash_separator
+                + "comprar" + slash_separator
+                + WebmotorsScraping.__assembly_car_basic_info(specification, "Make") + slash_separator
+                + WebmotorsScraping.__assembly_car_basic_info(specification, "Model") + slash_separator
+                + WebmotorsScraping.__assembly_car_version(specification) + slash_separator
+                + WebmotorsScraping.__assembly_car_ports(specification) + slash_separator
+                + WebmotorsScraping.__assembly_car_fabrication_model(specification) + slash_separator
+                + result_id).lower()
+
+    @staticmethod
+    def __assembly_car_basic_info(specification, field):
+        return specification[field]["Value"]
+
+    @staticmethod
+    def __assembly_car_version(specification):
+        return (specification["Version"]["Value"]
+                .replace(" ", "-")
+                .replace(".", ""))
+
+    @staticmethod
+    def __assembly_car_ports(specification):
+        return specification["NumberPorts"] + "-portas"
+
+    @staticmethod
+    def __assembly_car_fabrication_model(specification):
+        return specification["YearFabrication"] + "-" + str(int(specification["YearModel"]))
 
     @staticmethod
     def __parse_results_to_json(results):
@@ -48,4 +84,3 @@ class WebmotorsScraping(Scraping, FileResult):
 
     def do_car_search(self):
         return self.search(WebmotorsScraping.__assembly_site_url(self.car_model_path, self.encoded_query_params))
-
