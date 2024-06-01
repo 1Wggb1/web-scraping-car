@@ -2,7 +2,7 @@ name: run main.py
 
 on:
   schedule:
-    - cron:  "2 * * * *" #run after 2h30m every day
+    - cron:  "0/1 * * * *" #run after 2h30m every day
 
 jobs:
   build:
@@ -37,4 +37,4 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: develop
+          branch: master
