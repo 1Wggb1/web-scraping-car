@@ -3,4 +3,4 @@ site-packages
 # results/**
 # results
 *.cfg
-.idea
+.idea/**
