@@ -1,7 +1,7 @@
 import json
 
-from src.scraping.icarros_scraping import ICarrosScraping
-from src.scraping.webmotors_scraping import WebmotorsScraping
+from scraping.icarros_scraping import ICarrosScraping
+from scraping.webmotors_scraping import WebmotorsScraping
 
 if __name__ == "__main__":
     #search examples
