@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
+          git add results
           git diff-index --quiet HEAD || (git commit -a -m "[SCRAPING-UPDATE_ACTION] Update results" --allow-empty)
 
       - name: push changes
