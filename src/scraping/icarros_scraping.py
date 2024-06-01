@@ -6,7 +6,8 @@ from typing import Final
 
 
 class ICarrosScraping(Scraping, FileResult):
-    SITE_URL: Final = "https://www.icarros.com.br/ache/listaanuncios.jsp"
+    MAIN_URL: Final = "https://www.icarros.com.br"
+    SITE_URL: Final = f"{MAIN_URL}/ache/listaanuncios.jsp"
     CAR_CARD_HTML_ELEMENT: Final = "ul"
     CAR_CARD_CSS_ID: Final = "cards-grid"
     CAR_RESULT_TITLE_HTML_ELEMENT: Final = "span"
@@ -77,29 +78,21 @@ class ICarrosScraping(Scraping, FileResult):
     @staticmethod
     def extract_ads_data(car_cards):
         result = {}
-        html_images = car_cards.findAll("img")
-        for img in html_images:
-            val = ICarrosScraping.extract_onclick_value(img)
-            key = ICarrosScraping.extract_item_id(val)
-            result[key] = val
+        ads = car_cards.select(f"li.small-offer-card[data-anuncioid]")
+        for ad in ads:
+            ad_id = ad["data-anuncioid"]
+            ad_url = ad.a["href"]
+            result[ad_id] = {
+                "ad_url": f"{ICarrosScraping.MAIN_URL}{ad_url}",
+                "car": ICarrosScraping.extract_car_info(ad.img)
+            }
         return result
 
     @staticmethod
-    def extract_onclick_value(element):
+    def extract_car_info(element):
         onclick_val = element.attrs["onclick"]
         onclick_val = onclick_val[onclick_val.index("(") + 1:]
         return onclick_val[:len(onclick_val) - 1]
-
-    @staticmethod
-    def extract_item_id(onclick_val):
-        text_to_find = "item_id: "
-        item_id_first_letter_idx = onclick_val.find(text_to_find)
-        #+1 skip quotation mark
-        item_id_start_idx_excluding_quotation = item_id_first_letter_idx + len(text_to_find) + 1
-        #-1 skip quotation mark
-        item_id_start_final_idx_diff = (onclick_val[item_id_start_idx_excluding_quotation:].find(",") - 1)
-        item_id_final_idx = item_id_start_idx_excluding_quotation + item_id_start_final_idx_diff
-        return onclick_val[item_id_start_idx_excluding_quotation:item_id_final_idx]
 
     def get_max_page(self, scraping_result):
         filtered_item = self.filter(scraping_result,

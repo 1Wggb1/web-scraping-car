@@ -90,15 +90,10 @@
       <change afterPath="$PROJECT_DIR$/../projecteuler/src/main/java/Sieves.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Problem399.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../projecteuler/target/classes/Sieves.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/icarros/ad_data-01_06_2024-02_15.html" beforeDir="false" afterPath="$PROJECT_DIR$/results/icarros/icarros_ads.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/results/icarros/found_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/results/icarros/found_results.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/results/webmotors/found_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/results/webmotors/found_results.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/result/file_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/result/file_result.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/result/file_result_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/result/file_result_repository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scraping/icarros_scraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scraping/icarros_scraping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scraping/webmotors_scraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scraping/webmotors_scraping.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,5 +196,16 @@
       <updated>1717072327885</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
