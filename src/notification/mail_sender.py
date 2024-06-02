@@ -1,4 +1,4 @@
-import smtplib,  ssl
+import smtplib
 from email.message import EmailMessage
 import os
 from typing import Final
