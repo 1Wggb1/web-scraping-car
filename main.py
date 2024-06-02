@@ -1,7 +1,5 @@
-import json
-
 from src.scraping.icarros_scraping import ICarrosScraping
-from src.scraping.olx_scraping import OlxScraping
+#from src.scraping.olx_scraping import OlxScraping
 from src.scraping.webmotors_scraping import WebmotorsScraping
 
 if __name__ == "__main__":

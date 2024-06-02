@@ -1,3 +1,4 @@
+from src.notification.mail_sender import MailSender
 from src.result.file_result_repository import FileResultRepository
 from src.scraping.scraping import Scraping
 from src.result.file_result import FileResult
@@ -38,7 +39,23 @@ class WebmotorsScraping(Scraping, FileResult):
                 del result["Media"]
             result_id = str(result["UniqueId"])
             ad_data[result_id] = self.create_result(WebmotorsScraping.__assembly_ad_url(result, result_id), result)
+
+        new_content: dict = self.repository.diff_from_persistent(ad_data)
         self.repository.merge(ad_data)
+        if new_content:
+            beautiful_response = {}
+            for key in ad_data:
+                ad_key = ad_data[key]
+                car = ad_key["car"]
+                car_spec = car["Specification"]
+                beautiful_response[ad_key["ad_url"]] = {
+                    "model": car_spec["Title"],
+                    "city": car["Seller"]["City"],
+                    "year": car_spec["YearFabrication"],
+                    "km": car_spec["Odometer"],
+                    "price": car["Prices"]["Price"]
+                }
+            MailSender().send("webmotors", json.dumps(beautiful_response, indent=4))
 
     @staticmethod
     def __assembly_ad_url(result, result_id):

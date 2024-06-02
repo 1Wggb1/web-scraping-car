@@ -25,6 +25,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute py script # run main.py
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL_ID: ${{ secrets.EMAIL_ID }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
         run: python main.py
 
       - name: commit files
