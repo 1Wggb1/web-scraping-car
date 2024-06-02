@@ -5,6 +5,7 @@ from src.result.file_result import FileResult
 import json
 from src.util.logger_util import log
 from typing import Final
+from src.util.map_util import get_key_default
 
 
 class WebmotorsScraping(Scraping, FileResult):
@@ -12,11 +13,13 @@ class WebmotorsScraping(Scraping, FileResult):
     SITE_URL: Final = f"https://www.webmotors.com.br/api/search/car?url={MAIN_URL}/carros"
     RESULT_FILE_EXTENSION: Final = "json"
     REPOSITORY_FILE_NAME: Final = "/webmotors/found_results.json"
+    MAPS_ZIPCODE_URL: Final = "https://www.google.com/maps/search"
 
     def __init__(self, car_model_path, encoded_query_params):
         self.car_model_path = car_model_path
         self.encoded_query_params = encoded_query_params
         self.repository = FileResultRepository(WebmotorsScraping.REPOSITORY_FILE_NAME, self)
+        self.mail_sender = MailSender()
 
     def get_latest_cars(self):
         return self.repository.find_latest()
@@ -42,25 +45,53 @@ class WebmotorsScraping(Scraping, FileResult):
 
         new_content: dict = self.repository.diff_from_persistent(ad_data)
         self.repository.merge(ad_data)
+        self.__notify(new_content)
+
+    def __notify(self, new_content):
         if new_content:
-            beautiful_response = {}
-            for key in ad_data:
-                ad_key = ad_data[key]
-                car = ad_key["car"]
-                car_spec = car["Specification"]
-                beautiful_response[ad_key["ad_url"]] = {
-                    "model": car_spec["Title"],
-                    "city": car["Seller"]["City"],
-                    "year": car_spec["YearFabrication"],
-                    "km": car_spec["Odometer"],
-                    "price": car["Prices"]["Price"]
-                }
-            MailSender().send("webmotors", json.dumps(beautiful_response, indent=4))
+            log.info("Webmotors sending notification")
+            self.__do_notify(WebmotorsScraping.__create_notify_object(new_content))
+
+    @staticmethod
+    def __create_notify_object(ad_data):
+        response = {}
+        for key in ad_data:
+            ad = ad_data.get(key)
+            car = get_key_default(ad, "car")
+            car_spec = get_key_default(car, "Specification")
+            car_seller = get_key_default(car, "Seller")
+            ad_url = get_key_default(ad, "ad_url")
+            response[ad_url] = {
+                "model": get_key_default(car_spec, "Title"),
+                "city": get_key_default(car_seller, "City"),
+                "mapsLocation": WebmotorsScraping.__create_maps_url(car_seller),
+                "year": get_key_default(car_spec,"YearFabrication"),
+                "km": get_key_default(car_spec, "Odometer"),
+                "price": WebmotorsScraping.__get_price(car),
+            }
+        return json.dumps(response, indent=4)
+
+    @staticmethod
+    def __create_maps_url(car_seller_map):
+        localization = get_key_default(car_seller_map, "Localization")
+        if not isinstance(localization, list):
+            return ""
+        if localization:
+            zip_code = get_key_default(localization[0], "ZipCode")
+            return f"{WebmotorsScraping.MAPS_ZIPCODE_URL}/{zip_code}"
+
+    @staticmethod
+    def __get_price(car_map):
+        prices = get_key_default(car_map, "Prices")
+        return get_key_default(prices, "Price")
+
+    def __do_notify(self, content):
+        self.mail_sender.send("webmotors", content)
 
     @staticmethod
     def __assembly_ad_url(result, result_id):
         slash_separator = "/"
-        specification = result["Specification"]
+        specification = get_key_default(result, "Specification")
         return (WebmotorsScraping.MAIN_URL + slash_separator
                 + "comprar" + slash_separator
                 + WebmotorsScraping.__assembly_car_basic_info(specification, "Make") + slash_separator
@@ -72,21 +103,26 @@ class WebmotorsScraping(Scraping, FileResult):
 
     @staticmethod
     def __assembly_car_basic_info(specification, field):
-        return specification[field]["Value"]
+        field_object = get_key_default(specification, field)
+        return get_key_default(field_object, "Value")
 
     @staticmethod
     def __assembly_car_version(specification):
-        return (specification["Version"]["Value"]
+        version = WebmotorsScraping.__assembly_car_basic_info(specification, "Version")
+        return (version
                 .replace(" ", "-")
                 .replace(".", ""))
 
     @staticmethod
     def __assembly_car_ports(specification):
-        return specification["NumberPorts"] + "-portas"
+        return get_key_default(specification, "NumberPorts") + "-portas"
 
     @staticmethod
     def __assembly_car_fabrication_model(specification):
-        return specification["YearFabrication"] + "-" + str(int(specification["YearModel"]))
+        fabrication_year = get_key_default(specification, "YearFabrication")
+        model_year = get_key_default(specification, "YearModel")
+        model_year_parsed = int(model_year) if isinstance(model_year, float) else model_year
+        return fabrication_year + "-" + str(model_year_parsed)
 
     @staticmethod
     def __parse_results_to_json(results):

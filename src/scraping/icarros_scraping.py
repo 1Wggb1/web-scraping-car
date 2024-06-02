@@ -1,8 +1,12 @@
+import json
+
+from src.notification.mail_sender import MailSender
 from src.result.file_result import FileResult
 from src.result.file_result_repository import FileResultRepository
 from src.scraping.scraping import Scraping
 from src.util.logger_util import log
 from typing import Final
+from src.util.map_util import get_key_default
 
 
 class ICarrosScraping(Scraping, FileResult):
@@ -22,6 +26,7 @@ class ICarrosScraping(Scraping, FileResult):
     def __init__(self, filter_query_params):
         self.filter_query_params = filter_query_params
         self.file_result = FileResult()
+        self.mail_sender = MailSender()
         self.repository = FileResultRepository(ICarrosScraping.REPOSITORY_FILE_NAME, self.file_result)
 
     def get_latest_cars(self):
@@ -39,7 +44,7 @@ class ICarrosScraping(Scraping, FileResult):
     def do_car_search(self, page_number):
         return self.search(ICarrosScraping.__assembly_site_url(page_number, self.filter_query_params))
 
-    #Example of filter_query_param 
+    # Example of filter_query_param 
     # "ord=35&&sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_44000.1_-kmm_100000.1_-mar_14.1_-mod_1052.1_-cam_false.1_-ami_2011.1_-"
     @staticmethod
     def __assembly_site_url(page_number, filter_query_params):
@@ -56,8 +61,29 @@ class ICarrosScraping(Scraping, FileResult):
         max_page = self.get_max_page(first_page_search)
         self.do_scraping_on_pages(2, max_page, ads_data, html_scraping_results)
 
+        new_content: dict = self.repository.diff_from_persistent(ads_data)
         self.repository.merge(ads_data)
         self.persist_html_result(html_scraping_results)
+        self.__notify(new_content)
+
+    def __notify(self, new_content):
+        if new_content:
+            log.info("Icarros sending notification")
+            self.__do_notify(ICarrosScraping.__create_notify_object(new_content))
+
+    @staticmethod
+    def __create_notify_object(new_content):
+        response = {}
+        for ad_key in new_content:
+            ad = new_content.get(ad_key)
+            ad_url = get_key_default(ad, "ad_url")
+            response[ad_url] = {
+                "car": get_key_default(ad, "car")
+            }
+        return json.dumps(response, indent=4)
+
+    def __do_notify(self, content):
+        self.mail_sender.send("icarros", content)
 
     def do_scraping_on_pages(self, start_page, max_page: int, ads_data: dict, html_scraping_results: str):
         for page in range(start_page, max_page + 1):
