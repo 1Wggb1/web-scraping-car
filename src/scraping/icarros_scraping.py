@@ -52,7 +52,7 @@ class ICarrosScraping(Scraping, FileResult):
         car_cards = self.get_car_cards(first_page_search)
         html_scraping_results += car_cards.__str__()
 
-        ads_data: dict = ICarrosScraping.extract_ads_data(car_cards)
+        ads_data: dict = self.extract_ads_data(car_cards)
         max_page = self.get_max_page(first_page_search)
         self.do_scraping_on_pages(2, max_page, ads_data, html_scraping_results)
 
@@ -75,17 +75,15 @@ class ICarrosScraping(Scraping, FileResult):
                            ICarrosScraping.CAR_CARD_HTML_ELEMENT,
                            {"id": ICarrosScraping.CAR_CARD_CSS_ID})
 
-    @staticmethod
-    def extract_ads_data(car_cards):
+    def extract_ads_data(self, car_cards):
         result = {}
         ads = car_cards.select(f"li.small-offer-card[data-anuncioid]")
         for ad in ads:
             ad_id = ad["data-anuncioid"]
             ad_url = ad.a["href"]
-            result[ad_id] = {
-                "ad_url": f"{ICarrosScraping.MAIN_URL}{ad_url}",
-                "car": ICarrosScraping.extract_car_info(ad.img)
-            }
+            result[ad_id] = self.create_result(
+                f"{ICarrosScraping.MAIN_URL}{ad_url}",
+                ICarrosScraping.extract_car_info(ad.img))
         return result
 
     @staticmethod

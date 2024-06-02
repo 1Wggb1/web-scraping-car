@@ -30,12 +30,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Show dispatch inputs
-        run: echo "Workflow dispatch inputs ${{ github.event.inputs }}"
 
       - name: Execute main.py
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL_ID: ${{ secrets.EMAIL_ID }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
         run: python main.py
 
+      - name: Show dispatch inputs
+        run: echo "Workflow dispatch inputs ${{ github.event.inputs }}"
+        
       - name: Commit and push files
         run: |
           git config --local user.email "action@github.com"
