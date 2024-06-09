@@ -1,4 +1,5 @@
 import json
+import re
 
 from src.notification.mail_sender import MailSender
 from src.result.file_result import FileResult
@@ -6,7 +7,7 @@ from src.result.file_result_repository import FileResultRepository
 from src.scraping.scraping import Scraping
 from src.util.logger_util import log
 from typing import Final
-from src.util.map_util import get_key_default
+from src.util.map_util import get_key_or_default
 
 
 class ICarrosScraping(Scraping, FileResult):
@@ -66,31 +67,6 @@ class ICarrosScraping(Scraping, FileResult):
         self.persist_html_result(html_scraping_results)
         self.__notify(new_content)
 
-    def __notify(self, new_content):
-        if new_content:
-            log.info("Icarros sending notification")
-            self.__do_notify(ICarrosScraping.__create_notify_object(new_content))
-
-    @staticmethod
-    def __create_notify_object(new_content):
-        response = {}
-        for ad_key in new_content:
-            ad = new_content.get(ad_key)
-            ad_url = get_key_default(ad, "ad_url")
-            response[ad_url] = {
-                "car": get_key_default(ad, "car")
-            }
-        return json.dumps(response, indent=4)
-
-    def __do_notify(self, content):
-        self.mail_sender.send("icarros", content)
-
-    def do_scraping_on_pages(self, start_page, max_page: int, ads_data: dict, html_scraping_results: str):
-        for page in range(start_page, max_page + 1):
-            car_cards = self.get_car_cards(self.do_car_search(page))
-            ads_data |= ICarrosScraping.extract_ads_data(car_cards)
-            html_scraping_results += car_cards.__str__()
-
     def get_title(self, scraping_result):
         return self.filter(scraping_result,
                            ICarrosScraping.CAR_RESULT_TITLE_HTML_ELEMENT,
@@ -103,26 +79,35 @@ class ICarrosScraping(Scraping, FileResult):
 
     def extract_ads_data(self, car_cards):
         result = {}
-        ads = car_cards.select(f"li.small-offer-card[data-anuncioid]")
-        for ad in ads:
-            ad_id = ad["data-anuncioid"]
-            ad_url = ad.a["href"]
-            result[ad_id] = self.create_result(
-                f"{ICarrosScraping.MAIN_URL}{ad_url}",
-                ICarrosScraping.extract_car_info(ad.img))
+        ads_script = car_cards.select("li script")
+        for ad_script in ads_script:
+            ad = ICarrosScraping.extract_car_info(ad_script)
+            ad_offer = get_key_or_default(ad, "makesOffer")
+            ad_url = ICarrosScraping.__get_ad_url(ad_offer)
+            ad_id = ICarrosScraping.__get_ad_id(ad_offer)
+            result[ad_id] = self.create_result(f"{ICarrosScraping.MAIN_URL}{ad_url}", ad)
         return result
 
     @staticmethod
-    def extract_car_info(element):
-        onclick_val = element.attrs["onclick"]
-        onclick_val = onclick_val[onclick_val.index("(") + 1:]
-        return onclick_val[:len(onclick_val) - 1]
+    def extract_car_info(ad):
+        if not ad or not ad.contents:
+            return []
+        content = ad.contents
+        if not isinstance(content, list) or not content:
+            return []
+        return json.loads(content[0])
 
     def get_max_page(self, scraping_result):
         filtered_item = self.filter(scraping_result,
                                     ICarrosScraping.CAR_PROGRESS_BAR_ELEMENT,
                                     {"class": ICarrosScraping.CAR_PROGRESS_BAR_CSS_CLASS})
         return int(filtered_item.attrs["max"])
+
+    def do_scraping_on_pages(self, start_page, max_page: int, ads_data: dict, html_scraping_results: str):
+        for page in range(start_page, max_page + 1):
+            car_cards = self.get_car_cards(self.do_car_search(page))
+            ads_data |= ICarrosScraping.extract_ads_data(car_cards)
+            html_scraping_results += car_cards.__str__()
 
     def persist_html_result(self, results: str):
         log.info("Persisting html result file")
@@ -135,3 +120,48 @@ class ICarrosScraping(Scraping, FileResult):
     @staticmethod
     def __create_file_name(result_folder_name, file_name, extension):
         return f"{result_folder_name}/{file_name}.{extension}"
+
+    def __notify(self, new_content):
+        if new_content:
+            log.info("Icarros sending notification")
+            self.__do_notify(ICarrosScraping.__create_notify_object(new_content))
+
+    @staticmethod
+    def __create_notify_object(new_content):
+        response = {}
+        for ad_key in new_content:
+            ad = new_content.get(ad_key)
+            ad_url = get_key_or_default(ad, "ad_url")
+            response[ad_url] = {
+                "model": get_key_or_default(ad, "name"),
+                "color": get_key_or_default(ad, "color"),
+                "description": get_key_or_default(ad, "description"),
+                "year": get_key_or_default(ad, "productionDate"),
+                "km": ICarrosScraping.__get_car_km(ad),
+                "price": ICarrosScraping.__get_car_price(ad),
+            }
+        return json.dumps(response, indent=4)
+
+    @staticmethod
+    def __get_car_km(ad_offer):
+        odometer = get_key_or_default(ad_offer, "mileageFromOdometer")
+        return get_key_or_default(odometer, "value")
+
+    @staticmethod
+    def __get_car_price(ad_offer):
+        offer = get_key_or_default(ad_offer, "offers")
+        return get_key_or_default(offer, "price")
+
+    def __do_notify(self, content):
+        self.mail_sender.send("icarros", content)
+
+    @staticmethod
+    def __get_ad_url(ad_offer):
+        offer = get_key_or_default(ad_offer, "offers")
+        return get_key_or_default(offer, "url")
+
+    @staticmethod
+    def __get_ad_id(ad_offer):
+        vehicle_identification = get_key_or_default(ad_offer, "vehicleIdentificationNumber")
+        identifier_without_letters = re.sub("[^0-9]", "", vehicle_identification)
+        return identifier_without_letters

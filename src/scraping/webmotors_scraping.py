@@ -5,7 +5,7 @@ from src.result.file_result import FileResult
 import json
 from src.util.logger_util import log
 from typing import Final
-from src.util.map_util import get_key_default
+from src.util.map_util import get_key_or_default
 
 
 class WebmotorsScraping(Scraping, FileResult):
@@ -57,33 +57,39 @@ class WebmotorsScraping(Scraping, FileResult):
         response = {}
         for key in ad_data:
             ad = ad_data.get(key)
-            car = get_key_default(ad, "car")
-            car_spec = get_key_default(car, "Specification")
-            car_seller = get_key_default(car, "Seller")
-            ad_url = get_key_default(ad, "ad_url")
+            car = get_key_or_default(ad, "car")
+            car_spec = get_key_or_default(car, "Specification")
+            car_seller = get_key_or_default(car, "Seller")
+            ad_url = get_key_or_default(ad, "ad_url")
             response[ad_url] = {
-                "model": get_key_default(car_spec, "Title"),
-                "city": get_key_default(car_seller, "City"),
+                "model": get_key_or_default(car_spec, "Title"),
+                "color": WebmotorsScraping.__color(car_spec),
+                "city": get_key_or_default(car_seller, "City"),
                 "mapsLocation": WebmotorsScraping.__create_maps_url(car_seller),
-                "year": get_key_default(car_spec,"YearFabrication"),
-                "km": get_key_default(car_spec, "Odometer"),
+                "year": get_key_or_default(car_spec, "YearFabrication"),
+                "km": get_key_or_default(car_spec, "Odometer"),
                 "price": WebmotorsScraping.__get_price(car),
             }
         return json.dumps(response, indent=4)
 
     @staticmethod
+    def __color(car_spec):
+        color = get_key_or_default(car_spec, "Color")
+        return get_key_or_default(color, "Primary")
+
+    @staticmethod
     def __create_maps_url(car_seller_map):
-        localization = get_key_default(car_seller_map, "Localization")
+        localization = get_key_or_default(car_seller_map, "Localization")
         if not isinstance(localization, list):
             return ""
         if localization:
-            zip_code = get_key_default(localization[0], "ZipCode")
+            zip_code = get_key_or_default(localization[0], "ZipCode")
             return f"{WebmotorsScraping.MAPS_ZIPCODE_URL}/{zip_code}"
 
     @staticmethod
     def __get_price(car_map):
-        prices = get_key_default(car_map, "Prices")
-        return get_key_default(prices, "Price")
+        prices = get_key_or_default(car_map, "Prices")
+        return get_key_or_default(prices, "Price")
 
     def __do_notify(self, content):
         self.mail_sender.send("webmotors", content)
@@ -91,7 +97,7 @@ class WebmotorsScraping(Scraping, FileResult):
     @staticmethod
     def __assembly_ad_url(result, result_id):
         slash_separator = "/"
-        specification = get_key_default(result, "Specification")
+        specification = get_key_or_default(result, "Specification")
         return (WebmotorsScraping.MAIN_URL + slash_separator
                 + "comprar" + slash_separator
                 + WebmotorsScraping.__assembly_car_basic_info(specification, "Make") + slash_separator
@@ -103,8 +109,8 @@ class WebmotorsScraping(Scraping, FileResult):
 
     @staticmethod
     def __assembly_car_basic_info(specification, field):
-        field_object = get_key_default(specification, field)
-        return get_key_default(field_object, "Value")
+        field_object = get_key_or_default(specification, field)
+        return get_key_or_default(field_object, "Value")
 
     @staticmethod
     def __assembly_car_version(specification):
@@ -115,12 +121,12 @@ class WebmotorsScraping(Scraping, FileResult):
 
     @staticmethod
     def __assembly_car_ports(specification):
-        return get_key_default(specification, "NumberPorts") + "-portas"
+        return get_key_or_default(specification, "NumberPorts") + "-portas"
 
     @staticmethod
     def __assembly_car_fabrication_model(specification):
-        fabrication_year = get_key_default(specification, "YearFabrication")
-        model_year = get_key_default(specification, "YearModel")
+        fabrication_year = get_key_or_default(specification, "YearFabrication")
+        model_year = get_key_or_default(specification, "YearModel")
         model_year_parsed = int(model_year) if isinstance(model_year, float) else model_year
         return fabrication_year + "-" + str(model_year_parsed)
 
