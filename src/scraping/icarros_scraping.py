@@ -132,13 +132,14 @@ class ICarrosScraping(Scraping, FileResult):
         for ad_key in new_content:
             ad = new_content.get(ad_key)
             ad_url = get_key_or_default(ad, "ad_url")
+            ad_car = get_key_or_default(get_key_or_default(ad, "car"), "makesOffer")
             response[ad_url] = {
-                "model": get_key_or_default(ad, "name"),
-                "color": get_key_or_default(ad, "color"),
-                "description": get_key_or_default(ad, "description"),
-                "year": get_key_or_default(ad, "productionDate"),
-                "km": ICarrosScraping.__get_car_km(ad),
-                "price": ICarrosScraping.__get_car_price(ad),
+                "model": get_key_or_default(ad_car, "name"),
+                "color": get_key_or_default(ad_car, "color"),
+                "description": get_key_or_default(ad_car, "description"),
+                "year": get_key_or_default(ad_car, "productionDate"),
+                "km": ICarrosScraping.__get_car_km(ad_car),
+                "price": ICarrosScraping.__get_car_price(ad_car),
             }
         return json.dumps(response, indent=4)
 
