@@ -23,6 +23,7 @@ class ICarrosScraping(Scraping, FileResult):
     RESULT_FOLDER_NAME: Final = "icarros"
     RESULT_FILE_EXTENSION: Final = "html"
     REPOSITORY_FILE_NAME: Final = "/icarros/found_results.json"
+    RESULTS_PER_PAGE: Final = 35
 
     def __init__(self, filter_query_params):
         self.filter_query_params = filter_query_params
@@ -49,7 +50,7 @@ class ICarrosScraping(Scraping, FileResult):
     # "ord=35&&sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_44000.1_-kmm_100000.1_-mar_14.1_-mod_1052.1_-cam_false.1_-ami_2011.1_-"
     @staticmethod
     def __assembly_site_url(page_number, filter_query_params):
-        return f"{ICarrosScraping.SITE_URL}?pag={page_number}&{filter_query_params}"
+        return f"{ICarrosScraping.SITE_URL}?pag={page_number}&ord={ICarrosScraping.RESULTS_PER_PAGE}&{filter_query_params}"
 
     def do_cars_scraping(self, first_page_search):
         title = self.get_title(first_page_search)
@@ -81,11 +82,15 @@ class ICarrosScraping(Scraping, FileResult):
         result = {}
         ads_script = car_cards.select("li script")
         for ad_script in ads_script:
-            ad = ICarrosScraping.extract_car_info(ad_script)
-            ad_offer = get_key_or_default(ad, "makesOffer")
-            ad_url = ICarrosScraping.__get_ad_url(ad_offer)
-            ad_id = ICarrosScraping.__get_ad_id(ad_offer)
-            result[ad_id] = self.create_result(f"{ICarrosScraping.MAIN_URL}{ad_url}", ad)
+            try:
+                ad = ICarrosScraping.extract_car_info(ad_script)
+                ad_offer = get_key_or_default(ad, "makesOffer")
+                ad_url = ICarrosScraping.__get_ad_url(ad_offer)
+                ad_id = ICarrosScraping.__get_ad_id(ad_offer)
+                result[ad_id] = self.create_result(f"{ICarrosScraping.MAIN_URL}{ad_url}", ad)
+            except Exception as exception:
+                log.error(f"Error on extract data. Error value = {exception.__str__()}")
+                continue
         return result
 
     @staticmethod
@@ -106,7 +111,7 @@ class ICarrosScraping(Scraping, FileResult):
     def do_scraping_on_pages(self, start_page, max_page: int, ads_data: dict, html_scraping_results: str):
         for page in range(start_page, max_page + 1):
             car_cards = self.get_car_cards(self.do_car_search(page))
-            ads_data |= ICarrosScraping.extract_ads_data(car_cards)
+            ads_data |= self.extract_ads_data(car_cards)
             html_scraping_results += car_cards.__str__()
 
     def persist_html_result(self, results: str):
