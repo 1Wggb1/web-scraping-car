@@ -14,6 +14,7 @@ class WebmotorsScraping(Scraping, FileResult):
     RESULT_FILE_EXTENSION: Final = "json"
     REPOSITORY_FILE_NAME: Final = "/webmotors/found_results.json"
     MAPS_ZIPCODE_URL: Final = "https://www.google.com/maps/search"
+    RESULTS_PER_PAGE: Final = 35
 
     def __init__(self, car_model_path, encoded_query_params):
         self.car_model_path = car_model_path
@@ -37,15 +38,31 @@ class WebmotorsScraping(Scraping, FileResult):
         found_results = WebmotorsScraping.__parse_results_to_json(results)
         search_results = found_results["SearchResults"]
         ad_data = {}
+        self.add_ads_result(search_results, ad_data)
+        max_pages = WebmotorsScraping.calculate_max_pages(found_results["Count"])
+        self.do_scraping_on_pages(2, max_pages, ad_data)
+
+        new_content: dict = self.repository.diff_from_persistent(ad_data)
+        self.repository.merge(ad_data)
+        self.__notify(new_content)
+
+    @staticmethod
+    def calculate_max_pages(results_size):
+        return (results_size // WebmotorsScraping.RESULTS_PER_PAGE) + 1
+
+    def add_ads_result(self, search_results, ad_data):
         for result in search_results:
             if result.get("Media"):
                 del result["Media"]
             result_id = str(result["UniqueId"])
             ad_data[result_id] = self.create_result(WebmotorsScraping.__assembly_ad_url(result, result_id), result)
 
-        new_content: dict = self.repository.diff_from_persistent(ad_data)
-        self.repository.merge(ad_data)
-        self.__notify(new_content)
+    def do_scraping_on_pages(self, start_page: int, max_page: int, ads_data: dict):
+        for page in range(start_page, max_page + 1):
+            results = self.do_car_search(page)
+            found_results = WebmotorsScraping.__parse_results_to_json(results)
+            search_results = found_results["SearchResults"]
+            self.add_ads_result(search_results, ads_data)
 
     def __notify(self, new_content):
         if new_content:
@@ -138,5 +155,7 @@ class WebmotorsScraping(Scraping, FileResult):
     def __assembly_site_url(car_model_path, encoded_query_param):
         return f"{WebmotorsScraping.SITE_URL}{car_model_path}{encoded_query_param}"
 
-    def do_car_search(self):
-        return self.search(WebmotorsScraping.__assembly_site_url(self.car_model_path, self.encoded_query_params))
+    def do_car_search(self, page_number=1):
+        return self.search(WebmotorsScraping.__assembly_site_url(
+            self.car_model_path,
+            self.encoded_query_params + f"&actualPage={page_number}&displayPerPage={WebmotorsScraping.RESULTS_PER_PAGE}"))
