@@ -16,7 +16,8 @@ class WebmotorsScraping(Scraping, FileResult):
     MAPS_ZIPCODE_URL: Final = "https://www.google.com/maps/search"
     RESULTS_PER_PAGE: Final = 35
 
-    def __init__(self, car_model_path, encoded_query_params):
+    def __init__(self, car_model, car_model_path, encoded_query_params):
+        self.car_model = car_model
         self.car_model_path = car_model_path
         self.encoded_query_params = encoded_query_params
         self.repository = FileResultRepository(WebmotorsScraping.REPOSITORY_FILE_NAME, self)
@@ -38,12 +39,15 @@ class WebmotorsScraping(Scraping, FileResult):
         found_results = WebmotorsScraping.__parse_results_to_json(results)
         search_results = found_results["SearchResults"]
         ad_data = {}
-        self.add_ads_result(search_results, ad_data)
-        max_pages = WebmotorsScraping.calculate_max_pages(found_results["Count"])
-        self.do_scraping_on_pages(2, max_pages, ad_data)
+        ad_data[self.car_model] = {}
 
-        new_content: dict = self.repository.diff_from_persistent(ad_data)
-        self.repository.merge(ad_data)
+        ad_of_model = ad_data[self.car_model]
+        self.add_ads_result(search_results, ad_of_model)
+        max_pages = WebmotorsScraping.calculate_max_pages(found_results["Count"])
+        self.do_scraping_on_pages(2, max_pages, ad_of_model)
+
+        new_content: dict = self.repository.diff_from_persistent(ad_of_model, self.car_model)
+        self.repository.merge(ad_of_model, self.car_model)
         self.__notify(new_content)
 
     @staticmethod
@@ -55,7 +59,8 @@ class WebmotorsScraping(Scraping, FileResult):
             if result.get("Media"):
                 del result["Media"]
             result_id = str(result["UniqueId"])
-            ad_data[result_id] = self.create_result(WebmotorsScraping.__assembly_ad_url(result, result_id), result)
+            car_result = self.create_result(WebmotorsScraping.__assembly_ad_url(result, result_id), result)
+            ad_data[result_id] = car_result
 
     def do_scraping_on_pages(self, start_page: int, max_page: int, ads_data: dict):
         for page in range(start_page, max_page + 1):
