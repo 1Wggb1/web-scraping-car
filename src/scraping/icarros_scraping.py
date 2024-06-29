@@ -25,7 +25,8 @@ class ICarrosScraping(Scraping, FileResult):
     REPOSITORY_FILE_NAME: Final = "/icarros/found_results.json"
     RESULTS_PER_PAGE: Final = 35
 
-    def __init__(self, filter_query_params):
+    def __init__(self, car_model, filter_query_params):
+        self.car_model = car_model
         self.filter_query_params = filter_query_params
         self.file_result = FileResult()
         self.mail_sender = MailSender()
@@ -58,13 +59,15 @@ class ICarrosScraping(Scraping, FileResult):
 
         car_cards = self.get_car_cards(first_page_search)
         html_scraping_results += car_cards.__str__()
-
-        ads_data: dict = self.extract_ads_data(car_cards)
+        ads_data: dict = {
+            self.car_model: self.extract_ads_data(car_cards)
+        }
         max_page = self.get_max_page(first_page_search)
-        self.do_scraping_on_pages(2, max_page, ads_data, html_scraping_results)
+        ad_of_model = ads_data[self.car_model]
+        self.do_scraping_on_pages(2, max_page, ad_of_model, html_scraping_results)
 
-        new_content: dict = self.repository.diff_from_persistent(ads_data)
-        self.repository.merge(ads_data)
+        new_content: dict = self.repository.diff_from_persistent(ad_of_model, self.car_model)
+        self.repository.merge(ad_of_model, self.car_model)
         self.persist_html_result(html_scraping_results)
         self.__notify(new_content)
 
