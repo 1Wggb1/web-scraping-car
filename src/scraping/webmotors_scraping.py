@@ -5,7 +5,7 @@ from src.result.file_result import FileResult
 import json
 from src.util.logger_util import log
 from typing import Final
-from src.util.map_util import get_key_or_default
+from src.util.map_util import get_key_or_default, get_key_or_zero
 
 
 class WebmotorsScraping(Scraping, FileResult):
@@ -43,7 +43,7 @@ class WebmotorsScraping(Scraping, FileResult):
 
         ad_of_model = ad_data[self.car_model]
         self.add_ads_result(search_results, ad_of_model)
-        max_pages = WebmotorsScraping.calculate_max_pages(found_results["Count"])
+        max_pages = WebmotorsScraping.calculate_max_pages(get_key_or_zero(found_results, "Count"))
         self.do_scraping_on_pages(2, max_pages, ad_of_model)
 
         new_content: dict = self.repository.diff_from_persistent(ad_of_model, self.car_model)
