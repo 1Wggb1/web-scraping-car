@@ -30,7 +30,7 @@ if __name__ == "__main__":
     icarros_scraping.start_car_scraping()
     webmotors_scraping = WebmotorsScraping(brand,
                                            "/sp/hyundai/i30",
-                                           "%2Fsp%2Fhyundai%2Fi30%3Festadocidade%3DS%25C3%25A3o%2520Paulo%2520-%2520S%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26localizacao%3D-23.5666978%2C-46.5874202x50km%26kmate%3D100000%26marca1%3DHYUNDAI%26modelo1%3DI30%26precoate%3D40000%26cambio%3DManual%257CAutom%25C3%25A1tica&order=1&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false&pandora=false")
+                                           "%2Fsp%2Fhyundai%2Fi30%3Festadocidade%3DS%25C3%25A3o%2520Paulo%2520-%2520S%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26localizacao%3D-23.5666978%2C-46.5874202x50km%26kmate%3D100000%26marca1%3DHYUNDAI%26modelo1%3DI30%26precoate%3D40000%26cambio%3DManual&order=1&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false&pandora=false")
     webmotors_scraping.start_car_scraping()
 
     # olx_scraping = OlxScraping(
