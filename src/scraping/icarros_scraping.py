@@ -109,7 +109,7 @@ class ICarrosScraping(Scraping, FileResult):
         filtered_item = self.filter(scraping_result,
                                     ICarrosScraping.CAR_PROGRESS_BAR_ELEMENT,
                                     {"class": ICarrosScraping.CAR_PROGRESS_BAR_CSS_CLASS})
-        return int(filtered_item.attrs["max"])
+        return 1 if not filtered_item else int(filtered_item.attrs["max"])
 
     def do_scraping_on_pages(self, start_page, max_page: int, ads_data: dict, html_scraping_results: str):
         for page in range(start_page, max_page + 1):
@@ -132,7 +132,7 @@ class ICarrosScraping(Scraping, FileResult):
     def __notify(self, new_content):
         if new_content:
             log.info("Icarros sending notification")
-            self.__do_notify(ICarrosScraping.__create_notify_object(new_content))
+            self.__do_notify(ICarrosScraping.__create_notify_object(new_content), self.car_model)
 
     @staticmethod
     def __create_notify_object(new_content):
@@ -160,8 +160,8 @@ class ICarrosScraping(Scraping, FileResult):
         offer = get_key_or_default(ad_offer, "offers")
         return get_key_or_default(offer, "price")
 
-    def __do_notify(self, content):
-        self.mail_sender.send("icarros", content)
+    def __do_notify(self, content, car_model):
+        self.mail_sender.send("icarros", content, car_model)
 
     @staticmethod
     def __get_ad_url(ad_offer):
