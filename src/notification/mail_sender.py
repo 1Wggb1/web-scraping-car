@@ -13,8 +13,7 @@ class MailSender:
     PREFERENCES: Final = os.environ["PREFERENCES"]
 
     def send(self, provider_name, content, car_model):
-        preferences = json.loads(json.dumps(MailSender.PREFERENCES))
-        log.info(f"11{preferences}")
+        preferences = json.loads(MailSender.PREFERENCES)
         model_preferences = get_key_or_default(preferences, car_model.lower())
         if not model_preferences:
             log.warn("Model preferences not found")
