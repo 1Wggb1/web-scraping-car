@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from unidecode import unidecode
 
 
 class Scraping:
@@ -16,6 +17,6 @@ class Scraping:
 
     def create_result(self, ad_url: str, result: str) -> dict:
         return {
-            "ad_url": ad_url,
+            "ad_url": unidecode(ad_url),
             "car": result
         }
