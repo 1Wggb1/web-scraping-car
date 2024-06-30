@@ -114,7 +114,7 @@ class WebmotorsScraping(Scraping, FileResult):
         return get_key_or_default(prices, "Price")
 
     def __do_notify(self, content):
-        self.mail_sender.send("webmotors", content)
+        self.mail_sender.send("webmotors", content, self.car_model)
 
     @staticmethod
     def __assembly_ad_url(result, result_id):

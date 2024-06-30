@@ -1,19 +1,29 @@
+import json
 import smtplib
 from email.message import EmailMessage
 import os
 from typing import Final
+from src.util.map_util import get_key_or_default
 
 
 class MailSender:
     FROM: Final = os.environ["EMAIL"]
     FROM_ID: Final = os.environ["EMAIL_ID"]
-    TO: Final = os.environ["TO_EMAIL"]
+    PREFERENCES: Final = os.environ["PREFERENCES"]
 
-    def send(self, provider_name, content):
+    def send(self, provider_name, content, car_model):
+        preferences = json.loads(json.dumps(MailSender.PREFERENCES))
+        model_preferences = get_key_or_default(preferences, car_model.lower())
+        if not model_preferences:
+            return
+        recipients = get_key_or_default(model_preferences, "recipients")
+        if not recipients:
+            return
+
         msg = EmailMessage()
-        msg["Subject"] = f"New ad´s found on {provider_name}"
+        msg["Subject"] = f"New ad´s found of {car_model} on {provider_name}"
         msg["From"] = MailSender.FROM
-        msg["To"] = MailSender.TO
+        msg["To"] = recipients
         msg.set_content(content)
 
         with smtplib.SMTP("smtp.gmail.com", 587) as smtp_server:
