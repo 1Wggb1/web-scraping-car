@@ -35,7 +35,7 @@ jobs:
         env:
           EMAIL: ${{ secrets.EMAIL }}
           EMAIL_ID: ${{ secrets.EMAIL_ID }}
-          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          PREFERENCES: ${{ secrets.PREFERENCES }}
         run: python main.py
 
       - name: Show dispatch inputs
