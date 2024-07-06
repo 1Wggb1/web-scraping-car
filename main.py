@@ -1,39 +1,40 @@
+import json
+import os
+from typing import Final
+from src.util.map_util import get_key_or_default
+
 from src.scraping.icarros_scraping import ICarrosScraping
-#from src.scraping.olx_scraping import OlxScraping
 from src.scraping.webmotors_scraping import WebmotorsScraping
 
+PREFERENCES: Final = os.environ["PREFERENCES"]
+
 if __name__ == "__main__":
-    #search examples
-    brand = "Fiat 500"
-    icarros_scraping = ICarrosScraping(brand,
-        "sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_44000.1_-kmm_100000.1_-mar_14.1_-mod_1052.1_-cam_false.1_-ami_2011.1_-")
-    icarros_scraping.start_car_scraping()
+    prefs = json.loads(PREFERENCES)
+    for key, value in prefs.items():
+        notification_recipients = get_key_or_default(value, "notificationRecipients")
+        filters = get_key_or_default(value, "filters")
+        if not filters:
+            continue
+        webmotors_scraping = WebmotorsScraping(key, get_key_or_default(filters, "webmotors"), notification_recipients)
+        webmotors_scraping.start_car_scraping()
 
-    webmotors_scraping = WebmotorsScraping(brand, 
-                                           "/sp/fiat/500/de.2011",
-                                           "%2Fsp%2Ffiat%2F500%2Fde.2011%3Festadocidade%3DS%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26anode%3D2011%26kmate%3D100000%26marca1%3DFIAT%26modelo1%3D500%26precoate%3D44000%26cambio%3DManual%26o%3D5&order=5&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false")
-    webmotors_scraping.start_car_scraping()
+        icarros_scraping = ICarrosScraping(key, get_key_or_default(filters, "icarros"), notification_recipients)
+        icarros_scraping.start_car_scraping()
 
-    brand = "Nissan March"
-    icarros_scraping = ICarrosScraping(brand,
-                                       "sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_44000.1_-mar_28.1_-mod_2314.1_-kmm_100000.1_-")
-    icarros_scraping.start_car_scraping()
-    webmotors_scraping = WebmotorsScraping(brand,
-                                           "/sp/nissan/march",
-                                           "%2Fsp%2Fnissan%2Fmarch%3Festadocidade%3DS%25C3%25A3o%2520Paulo%2520-%2520S%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26localizacao%3D-23.5666978%2C-46.5874202x50km%26kmate%3D100000%26marca1%3DNISSAN%26modelo1%3DMARCH%26precoate%3D44000&order=1&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false&pandora=false")
-    webmotors_scraping.start_car_scraping()
-
-
-    brand = "i30"
-    icarros_scraping = ICarrosScraping(brand,
-                                       "sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_40000.1_-kmm_100000.1_-mar_17.1_-mod_1018.1_-cam_false.1_-")
-    icarros_scraping.start_car_scraping()
-    webmotors_scraping = WebmotorsScraping(brand,
-                                           "/sp/hyundai/i30",
-                                           "%2Fsp%2Fhyundai%2Fi30%3Festadocidade%3DS%25C3%25A3o%2520Paulo%2520-%2520S%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26localizacao%3D-23.5666978%2C-46.5874202x50km%26kmate%3D100000%26marca1%3DHYUNDAI%26modelo1%3DI30%26precoate%3D40000%26cambio%3DManual&order=1&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false&pandora=false")
-    webmotors_scraping.start_car_scraping()
-
-    # olx_scraping = OlxScraping(
-    #     "Z0hgFMeCiYT7-Rj5VPuCm/pt-BR/autos-e-pecas/carros-vans-e-utilitarios/fiat/500/estado-sp/sao-paulo-e-regiao.json",
-    #     "gb=1&me=100000&pe=44000&sp=1&route=carros-vans-e-utilitarios&route=fiat&route=500&route=estado-sp&route=sao-paulo-e-regiao")
-    # olx_scraping.start_car_scraping()
+    #scraping object example
+    #'{
+    # "car model name": {
+    #     "filters": {
+    #         "webmotors": "/sp/chevrolet/ealta/de.2011%2Fsp%2Fchevrolet%2Fcelta%2Fde.2011%3Festadocidade%3DS%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26anode%3D2011%26kmate%3D100000%26marca1%3DFIAT%26modelo1%3D500%26precoate%3D44000%26cambio%3DManual%26o%3D5&order=5&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false",
+    #         "icarros": "sop=esc_2.1_-cid_9668.1_-rai_50.1_-prf_44000.1_-kmm_100000.1_-mar_14.1_-mod_1052.1_-cam_false.1_-ami_2011.1_-"
+    #     },
+    #     "notificationRecipients": "abcd@gmail.com, efg@gmail.com"
+    # },
+    # "car model name 2": {
+    #     "filters": {
+    #         "webmotors": "/sp/hyundai/ix35%2Fsp%2Fhyundai%2Fix35%3Festadocidade%3DS%25C3%25A3o%2520Paulo%26tipoveiculo%3Dcarros%26kmate%3D120000%26marca1%3DHONDA%26modelo1%3DFIT%26precoate%3D45000&order=1&showMenu=true&showCount=true&showBreadCrumb=true&testAB=false&returnUrl=false&pandora=true",
+    #         "icarros": "sop=esc_2.1_-cid_9668.1_-rai_50.1_-cam_false.1_-mar_16.1_-mod_233.1_-kmm_120000.1_-prf_44000.1_-"
+    #     },
+    #     "notificationRecipients": "abcd@gmail.com, efg@gmail.com"
+    # }
+    # }'

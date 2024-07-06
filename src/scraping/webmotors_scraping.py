@@ -16,10 +16,10 @@ class WebmotorsScraping(Scraping, FileResult):
     MAPS_ZIPCODE_URL: Final = "https://www.google.com/maps/search"
     RESULTS_PER_PAGE: Final = 35
 
-    def __init__(self, car_model, car_model_path, encoded_query_params):
+    def __init__(self, car_model, encoded_query_params, notification_recipients):
         self.car_model = car_model
-        self.car_model_path = car_model_path
         self.encoded_query_params = encoded_query_params
+        self.notification_recipients = notification_recipients
         self.repository = FileResultRepository(WebmotorsScraping.REPOSITORY_FILE_NAME, self)
         self.mail_sender = MailSender()
 
@@ -27,12 +27,12 @@ class WebmotorsScraping(Scraping, FileResult):
         return self.repository.find_latest()
 
     def start_car_scraping(self):
-        log.info("Starting webmotors scraping...")
+        log.info(f"Starting webmotors {self.car_model} scraping...")
         results = self.do_car_search()
         if not len(results):
-            log.info("No result found on webmotors scraping ⊙﹏⊙∥")
+            log.info(f"No result found on webmotors {self.car_model} scraping ⊙﹏⊙∥")
             return
-        log.info("Webmotors scraping result...")
+        log.info(f"Webmotors {self.car_model} scraping result...")
         self.do_car_scarping(results)
 
     def do_car_scarping(self, results):
@@ -71,7 +71,7 @@ class WebmotorsScraping(Scraping, FileResult):
 
     def __notify(self, new_content):
         if new_content:
-            log.info("Webmotors sending notification")
+            log.info(f"Webmotors {self.car_model} sending notification")
             self.__do_notify(WebmotorsScraping.__create_notify_object(new_content))
 
     @staticmethod
@@ -114,7 +114,7 @@ class WebmotorsScraping(Scraping, FileResult):
         return get_key_or_default(prices, "Price")
 
     def __do_notify(self, content):
-        self.mail_sender.send("webmotors", content, self.car_model)
+        self.mail_sender.send("webmotors", content, self.car_model, self.notification_recipients)
 
     @staticmethod
     def __assembly_ad_url(result, result_id):
@@ -157,10 +157,9 @@ class WebmotorsScraping(Scraping, FileResult):
         return json.loads(results)
 
     @staticmethod
-    def __assembly_site_url(car_model_path, encoded_query_param):
-        return f"{WebmotorsScraping.SITE_URL}{car_model_path}{encoded_query_param}"
+    def __assembly_site_url(encoded_query_param):
+        return f"{WebmotorsScraping.SITE_URL}{encoded_query_param}"
 
     def do_car_search(self, page_number=1):
         return self.search(WebmotorsScraping.__assembly_site_url(
-            self.car_model_path,
             self.encoded_query_params + f"&actualPage={page_number}&displayPerPage={WebmotorsScraping.RESULTS_PER_PAGE}"))

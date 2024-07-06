@@ -25,9 +25,10 @@ class ICarrosScraping(Scraping, FileResult):
     REPOSITORY_FILE_NAME: Final = "/icarros/found_results.json"
     RESULTS_PER_PAGE: Final = 35
 
-    def __init__(self, car_model, filter_query_params):
+    def __init__(self, car_model, filter_query_params, notification_recipients):
         self.car_model = car_model
         self.filter_query_params = filter_query_params
+        self.notification_recipients = notification_recipients
         self.file_result = FileResult()
         self.mail_sender = MailSender()
         self.repository = FileResultRepository(ICarrosScraping.REPOSITORY_FILE_NAME, self.file_result)
@@ -36,12 +37,12 @@ class ICarrosScraping(Scraping, FileResult):
         return self.repository.find_latest()
 
     def start_car_scraping(self):
-        log.info("Starting icarros scraping...")
+        log.info(f"Starting icarros {self.car_model} scraping...")
         first_page_search = self.do_car_search(1)
         if not len(first_page_search):
-            log.info("No result found on icarros scraping ⊙﹏⊙∥")
+            log.info(f"No result found on icarros {self.car_model} scraping ⊙﹏⊙∥")
             return
-        log.info("Icarros scraping result...")
+        log.info(f"Icarros {self.car_model} scraping result...")
         self.do_cars_scraping(first_page_search)
 
     def do_car_search(self, page_number):
@@ -131,8 +132,8 @@ class ICarrosScraping(Scraping, FileResult):
 
     def __notify(self, new_content):
         if new_content:
-            log.info("Icarros sending notification")
-            self.__do_notify(ICarrosScraping.__create_notify_object(new_content), self.car_model)
+            log.info(f"Icarros {self.car_model} sending notification")
+            self.__do_notify(ICarrosScraping.__create_notify_object(new_content))
 
     @staticmethod
     def __create_notify_object(new_content):
@@ -161,8 +162,8 @@ class ICarrosScraping(Scraping, FileResult):
         offer = get_key_or_default(ad_offer, "offers")
         return get_key_or_default(offer, "price")
 
-    def __do_notify(self, content, car_model):
-        self.mail_sender.send("icarros", content, car_model)
+    def __do_notify(self, content):
+        self.mail_sender.send("icarros", content, self.car_model, self.notification_recipients)
 
     @staticmethod
     def __get_ad_url(ad_offer):
