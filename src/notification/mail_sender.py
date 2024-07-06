@@ -10,7 +10,6 @@ class MailSender:
 
     def send(self, provider_name, content, car_model, recipients):
 
-        print(provider_name, content, car_model, recipients)
         msg = EmailMessage()
         msg["Subject"] = f"New ad´s found of {car_model} on {provider_name}"
         msg["From"] = MailSender.FROM
