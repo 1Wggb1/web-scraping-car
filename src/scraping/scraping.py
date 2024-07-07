@@ -5,7 +5,7 @@ from unidecode import unidecode
 
 class Scraping:
     FAKE_AGENT_HEADER = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 
     def search(self, site_url):
         scraping_content = requests.get(site_url, headers=Scraping.FAKE_AGENT_HEADER).content
