@@ -10,7 +10,7 @@ class Scraping:
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
-        "Cookie": "_dd_s=rum=0&expire=2020380005083"}
+        "Cookie": "_dd_s=rum=0&expire=1720380005083"}
 
     def search(self, site_url):
         scraping_content = requests.get(site_url, headers=Scraping.FAKE_AGENT_HEADER).content
