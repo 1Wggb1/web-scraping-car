@@ -154,7 +154,6 @@ class WebmotorsScraping(Scraping, FileResult):
 
     @staticmethod
     def __parse_results_to_json(results):
-        log.info(results)
         return json.loads(results)
 
     @staticmethod
