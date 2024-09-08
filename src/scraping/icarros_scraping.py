@@ -69,7 +69,7 @@ class ICarrosScraping(Scraping, FileResult):
 
         new_content: dict = self.repository.diff_from_persistent(ad_of_model, self.car_model)
         self.repository.merge(ad_of_model, self.car_model)
-        self.persist_html_result(html_scraping_results)
+        #self.persist_html_result(html_scraping_results)
         self.__notify(new_content)
 
     def get_title(self, scraping_result):
