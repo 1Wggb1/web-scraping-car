@@ -2,6 +2,7 @@ import json
 import re
 
 from src.notification.mail_sender import MailSender
+from src.notification.telegram_sender import TelegramSender
 from src.result.file_result import FileResult
 from src.result.file_result_repository import FileResultRepository
 from src.scraping.scraping import Scraping
@@ -31,6 +32,7 @@ class ICarrosScraping(Scraping, FileResult):
         self.notification_recipients = notification_recipients
         self.file_result = FileResult()
         self.mail_sender = MailSender()
+        self.telegram_sender = TelegramSender()
         self.repository = FileResultRepository(ICarrosScraping.REPOSITORY_FILE_NAME, self.file_result)
 
     def get_latest_cars(self):
@@ -164,6 +166,7 @@ class ICarrosScraping(Scraping, FileResult):
 
     def __do_notify(self, content):
         self.mail_sender.send("icarros", content, self.car_model, self.notification_recipients)
+        self.telegram_sender.send("icarros", content, self.car_model)
 
     @staticmethod
     def __get_ad_url(ad_offer):

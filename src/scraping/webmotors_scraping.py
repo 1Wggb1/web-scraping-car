@@ -1,4 +1,5 @@
 from src.notification.mail_sender import MailSender
+from src.notification.telegram_sender import TelegramSender
 from src.result.file_result_repository import FileResultRepository
 from src.scraping.scraping import Scraping
 from src.result.file_result import FileResult
@@ -22,6 +23,7 @@ class WebmotorsScraping(Scraping, FileResult):
         self.notification_recipients = notification_recipients
         self.repository = FileResultRepository(WebmotorsScraping.REPOSITORY_FILE_NAME, self)
         self.mail_sender = MailSender()
+        self.telegram_sender = TelegramSender()
 
     def get_latest_cars(self):
         return self.repository.find_latest()
@@ -115,6 +117,7 @@ class WebmotorsScraping(Scraping, FileResult):
 
     def __do_notify(self, content):
         self.mail_sender.send("webmotors", content, self.car_model, self.notification_recipients)
+        self.telegram_sender.send("webmotors", content, self.car_model)
 
     @staticmethod
     def __assembly_ad_url(result, result_id):

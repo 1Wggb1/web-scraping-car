@@ -36,6 +36,8 @@ jobs:
           EMAIL: ${{ secrets.EMAIL }}
           EMAIL_ID: ${{ secrets.EMAIL_ID }}
           PREFERENCES: ${{ secrets.PREFERENCES }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: python main.py
 
       - name: Show dispatch inputs
