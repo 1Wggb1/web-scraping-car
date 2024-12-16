@@ -9,7 +9,7 @@ class TelegramSender:
 
     def send(self, provider_name, content, car_model):
         try:
-            bot = Bot(BOT_TOKEN)
-            bot.sendMessage(CHAT_ID, f"<b>{provider_name.upper()} - CAR ADS FOUND</b>\n\n- MODEL = {car_model}\n\n<code>{content}</code>", parse_mode="HTML")
+            bot = Bot(TelegramSender.BOT_TOKEN)
+            bot.sendMessage(TelegramSender.CHAT_ID, f"<b>{provider_name.upper()} - CAR ADS FOUND</b>\n\n- MODEL = {car_model}\n\n<code>{content}</code>", parse_mode="HTML")
         except Exception as exception:
             log.error(f"Error when sending telegram message. Error message = {exception.__str__()}")
