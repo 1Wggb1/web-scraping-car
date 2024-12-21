@@ -3,4 +3,6 @@ site-packages
 # results/**
 # results
 *.cfg
-.idea/**
+.idea
+**/__pycache__/**
+**/venv/**
