@@ -20,7 +20,6 @@ if __name__ == "__main__":
     for key, value in prefs.items():
         notification_recipients = get_key_or_default(value, "notificationRecipients")
         filters = get_key_or_default(value, "filters")
-        print(filters)
         if not filters:
             continue
 
