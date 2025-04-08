@@ -18,8 +18,8 @@ if __name__ == "__main__":
         webmotors_scraping = WebmotorsScraping(key, get_key_or_default(filters, "webmotors"), notification_recipients)
         webmotors_scraping.start_car_scraping()
 
-        icarros_scraping = ICarrosScraping(key, get_key_or_default(filters, "icarros"), notification_recipients)
-        icarros_scraping.start_car_scraping()
+        # icarros_scraping = ICarrosScraping(key, get_key_or_default(filters, "icarros"), notification_recipients)
+        # icarros_scraping.start_car_scraping()
 
     #scraping object example
     #'{
